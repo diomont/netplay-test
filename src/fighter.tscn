@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://r8c351u0qoor"]
+
+[ext_resource type="Script" path="res://fighter.gd" id="1_u1ukj"]
+[ext_resource type="Texture2D" uid="uid://bmhbuloxutgyw" path="res://sprites/attack_1.png" id="2_30adv"]
+[ext_resource type="Texture2D" uid="uid://csxxw6jj630nb" path="res://sprites/attack_2.png" id="3_ggygf"]
+[ext_resource type="Texture2D" uid="uid://cnh3vg8obtqmk" path="res://sprites/block.png" id="4_dpcj6"]
+[ext_resource type="Texture2D" uid="uid://clap53ugsa0bm" path="res://sprites/hurt.png" id="5_fmmon"]
+[ext_resource type="Texture2D" uid="uid://dtryn3mxp7ejt" path="res://sprites/idle.png" id="6_rhhad"]
+[ext_resource type="Texture2D" uid="uid://ds3up4qcsusms" path="res://sprites/walk_b.png" id="7_6xhk4"]
+[ext_resource type="Texture2D" uid="uid://dsow5wk1eff3o" path="res://sprites/walk_f.png" id="8_7nuoq"]
+[ext_resource type="Script" path="res://scripts/StateMachine.gd" id="9_keoag"]
+[ext_resource type="Script" path="res://scripts/standing.gd" id="10_7cvsp"]
+[ext_resource type="Script" path="res://scripts/walking_forward.gd" id="11_fopjr"]
+[ext_resource type="Script" path="res://scripts/walking_backward.gd" id="12_8au1y"]
+[ext_resource type="Script" path="res://scripts/attacking.gd" id="13_xruqs"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dkln4"]
+animations = [{
+"frames": [{
+"duration": 7.0,
+"texture": ExtResource("2_30adv")
+}, {
+"duration": 12.0,
+"texture": ExtResource("3_ggygf")
+}, {
+"duration": 8.0,
+"texture": ExtResource("2_30adv")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 60.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dpcj6")
+}],
+"loop": true,
+"name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_fmmon")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_rhhad")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_6xhk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rhhad")
+}],
+"loop": true,
+"name": &"walk_b",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_7nuoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rhhad")
+}],
+"loop": true,
+"name": &"walk_f",
+"speed": 6.0
+}]
+
+[node name="Fighter" type="Node2D"]
+script = ExtResource("1_u1ukj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -124)
+sprite_frames = SubResource("SpriteFrames_dkln4")
+animation = &"attack"
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("9_keoag")
+
+[node name="Standing" type="Node" parent="StateMachine"]
+script = ExtResource("10_7cvsp")
+
+[node name="WalkingForward" type="Node" parent="StateMachine"]
+script = ExtResource("11_fopjr")
+
+[node name="WalkingBackward" type="Node" parent="StateMachine"]
+script = ExtResource("12_8au1y")
+
+[node name="Attacking" type="Node" parent="StateMachine"]
+script = ExtResource("13_xruqs")
+
+[node name="Blocking" type="Node" parent="StateMachine"]
+
+[node name="Hitstun" type="Node" parent="StateMachine"]

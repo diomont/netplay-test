@@ -1,0 +1,162 @@
+[gd_scene load_steps=2 format=3 uid="uid://hsjikejfgyqq"]
+
+[ext_resource type="Script" path="res://connection_menu.gd" id="1_g11ou"]
+
+[node name="ConnectionMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g11ou")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_right = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SettingsPanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SettingsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="NameRow" type="HBoxContainer" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/NameRow"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Name:"
+
+[node name="NameInput" type="LineEdit" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/NameRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DelayRow" type="HBoxContainer" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/DelayRow"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Delay:"
+
+[node name="DelayInput" type="SpinBox" parent="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/DelayRow"]
+layout_mode = 2
+max_value = 8.0
+value = 2.0
+rounded = true
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Host" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Host"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TabContainer/Host/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Address"
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/Host/HBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="Connect" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Connect"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TabContainer/Connect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Address"
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/Connect/HBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="ConnectedPanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ConnectedPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ConnectedPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerNameBox" type="HBoxContainer" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer/PlayerNameBox"]
+layout_mode = 2
+text = "Connected to: "
+
+[node name="PlayerLabel" type="Label" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer/PlayerNameBox"]
+layout_mode = 2
+text = "Some Player"
+
+[node name="PingBox" type="HBoxContainer" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer/PingBox"]
+layout_mode = 2
+text = "Ping:"
+
+[node name="PingLabel" type="Label" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer/PingBox"]
+layout_mode = 2
+text = "..."
+
+[node name="StartBtn" type="Button" parent="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start"
+
+[node name="PingTimer" type="Timer" parent="VBoxContainer/ConnectedPanel"]
+
+[connection signal="text_changed" from="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/NameRow/NameInput" to="." method="_on_name_input_text_changed"]
+[connection signal="value_changed" from="VBoxContainer/SettingsPanel/MarginContainer/VBoxContainer/DelayRow/DelayInput" to="." method="_on_delay_input_value_changed"]
+[connection signal="tab_changed" from="VBoxContainer/TabContainer" to="." method="_on_tab_changed"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/Host/HBoxContainer/Button" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/Connect/HBoxContainer/Button" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ConnectedPanel/MarginContainer/VBoxContainer/StartBtn" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="VBoxContainer/ConnectedPanel/PingTimer" to="." method="_on_ping_timer_timeout"]
